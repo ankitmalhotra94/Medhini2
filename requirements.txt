@@ -1,0 +1,8 @@
+streamlit==1.12.2
+pandas==1.4.4
+plotly
+numpy==1.23.2
+torch==1.10.2
+torchvision==0.11.3
+fpdf2==2.5.7
+mysql-connector-python==8.0.29
