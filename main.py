@@ -45,7 +45,7 @@ def get_data():
                 if rs[1] == login_pswd :
                     st.success(f"{login_user} Successfully Logged in ",icon="✅")
                     st.session_state['login'] = True
-                    st.write(os.path.dirname(__file__))
+#                    st.write(os.path.dirname(__file__))
                     st.experimental_set_query_params(
                             logindone = True,
                             cnt=1,
