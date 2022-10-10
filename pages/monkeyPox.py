@@ -519,7 +519,7 @@ if loginCount == 1 :
                 folder_name1=first_time()
 #                st.write(folder_name1)
                 #save uploaded image file in new folder name "uploaded_case"
-                st.write(os.path.dirname(__file__))
+#                st.write(os.path.dirname(__file__))
                 with open(os.path.join(os.path.dirname(__file__)+"/",image_file.name), "wb") as f:
                     f.write(image_file.getbuffer())
 #                st.success("File saved")
