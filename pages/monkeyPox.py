@@ -363,7 +363,7 @@ def generate_pdf():
     pdf.set_font('helvetica', '', 16)
     doc_name=st.experimental_get_query_params().get('dname')[0]
     pdf.cell(0,10,f'Doctor\'s Name :- {doc_name}',ln=True)
-    pdf.cell(0,10,'Hospital Name :- {hospital_name}',ln=True)
+    pdf.cell(0,10,'Hospital Name :- XXXXXXXXXX',ln=True)
     P_name1 = st.session_state['pname']
     P_age1 = st.session_state['page']
     P_sex1 = st.session_state['psex']
@@ -446,7 +446,7 @@ def generate_pdfB():
     pdf.set_font('helvetica', '', 16)
     doc_name=st.experimental_get_query_params().get('dname')[0]
     pdf.cell(0,10,f'Doctor\'s Name :- {doc_name}',ln=True)
-    pdf.cell(0,10,'Hospital Name :- {hospital_name}',ln=True)
+    pdf.cell(0,10,'Hospital Name :- XXXXXXXXXX',ln=True)
     P_name1 = st.session_state['pname']
     P_age1 = st.session_state['page']
     P_sex1 = st.session_state['psex']
