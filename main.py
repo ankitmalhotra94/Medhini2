@@ -26,11 +26,11 @@ def get_data():
             login_pswd=st.session_state['lpswd']
             # Connect to server
             cnx = mysql.connector.connect(
-            host="sql6.freemysqlhosting.net",
-            port=3306,
-            user="sql6525472",
-            password="5YE8LUlZdI",
-            database="sql6525472")
+                    host="sql280.main-hosting.eu",
+                    port=3306,
+                    user="u553007133_xpbfq",
+                    password="yR1/#1hV0AP",
+                    database="u553007133_xlvy9")            
             # Get a cursor
             cur = cnx.cursor()
             # Execute a query
@@ -79,11 +79,11 @@ def do_signup():
         spass=st.session_state['spswd']
         # Connect to server
         cnx = mysql.connector.connect(
-                host="sql6.freemysqlhosting.net",
+                host="sql280.main-hosting.eu",
                 port=3306,
-                user="sql6525472",
-                password="5YE8LUlZdI",
-                database="sql6525472")
+                user="u553007133_xpbfq",
+                password="yR1/#1hV0AP",
+                database="u553007133_xlvy9") 
 #        host="localhost",
 #        port=3306,
 #       user="root",
