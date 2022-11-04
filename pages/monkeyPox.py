@@ -20,6 +20,13 @@ from pathlib import Path
 
 st.set_page_config(page_title="MonkeyPox", page_icon="🧑🏽‍⚕️", layout="centered", initial_sidebar_state="collapsed", menu_items=None)
 
+hide_menu_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+        </style>
+        """
+st.markdown(hide_menu_style, unsafe_allow_html=True)
+
 # Title of the main page
 display = Image.open('cover.jpg')
 display = np.array(display)
