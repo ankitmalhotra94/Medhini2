@@ -286,7 +286,7 @@ def patient_data_validation():
 
 
 def get_patient_data():
-    with st.form("PatientForm",clear_on_submit=False):
+    with st.form("PatientForm",clear_on_submit=True):
                 P_name=st.text_input("Patient name",type="default",max_chars=30,value="",key="pname",placeholder="Enter Patient Name")
                 P_sex=st.text_input("Sex",type="default",max_chars=1,value="",key="psex",placeholder="M/F/O")
                 P_age=st.text_input("Age",type="default",max_chars=2,value="",key="page",placeholder="Enter Patient Age")
