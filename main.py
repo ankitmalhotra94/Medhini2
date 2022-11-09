@@ -225,7 +225,8 @@ def validate_signup():
         else :
                 st.write()
 
-tab1, tab2 = st.tabs(["Login","Sign Up"])
+tab1 = st.tabs(["Login")
+#tab1, tab2 = st.tabs(["Login","Sign Up"])
 
 with tab1:
         with st.form("LoginForm",clear_on_submit=True):
@@ -235,16 +236,16 @@ with tab1:
         if login_submit:
                 get_data()
 
-with tab2:
-        with st.form("SignInForm",clear_on_submit=False):
-                fname=st.text_input("First Name",type="default",max_chars=15,value="",key="sfname",placeholder="Enter First name")
-                mname=st.text_input("Middle Name",type="default",max_chars=15,value="",key="smname",placeholder="Enter Middle name")
-                lname=st.text_input("Last Name",type="default",max_chars=15,value="",key="slname",placeholder="Enter Last name")
-                username=st.text_input("UserId",type="default",max_chars=10,value="",key="suname",placeholder="Create user id of your choice")
-                contact=st.text_input("Contact No",type="default",max_chars=10,value="",key="sphno",placeholder="Enter Contact Number")
-                email=st.text_input("Email",type="default",max_chars=30,value="",key="semail",placeholder="Enter your mail id")
-                spswd=st.text_input("Password",type="password",max_chars=20,placeholder="Password",key="spswd",value="")
-                scpswd=st.text_input("Confirm Password",type="password",max_chars=20,placeholder="Confirm Password",key="scpswd",value="")
-                Signup_submit=st.form_submit_button("Submit")
-        if Signup_submit:
-                validate_signup()
+#with tab2:
+#        with st.form("SignInForm",clear_on_submit=False):
+#                fname=st.text_input("First Name",type="default",max_chars=15,value="",key="sfname",placeholder="Enter First name")
+#                mname=st.text_input("Middle Name",type="default",max_chars=15,value="",key="smname",placeholder="Enter Middle name")
+##                lname=st.text_input("Last Name",type="default",max_chars=15,value="",key="slname",placeholder="Enter Last name")
+ #               username=st.text_input("UserId",type="default",max_chars=10,value="",key="suname",placeholder="Create user id of your choice")
+ #               contact=st.text_input("Contact No",type="default",max_chars=10,value="",key="sphno",placeholder="Enter Contact Number")
+ #               email=st.text_input("Email",type="default",max_chars=30,value="",key="semail",placeholder="Enter your mail id")
+ #               spswd=st.text_input("Password",type="password",max_chars=20,placeholder="Password",key="spswd",value="")
+ #               scpswd=st.text_input("Confirm Password",type="password",max_chars=20,placeholder="Confirm Password",key="scpswd",value="")
+ #               Signup_submit=st.form_submit_button("Submit")
+ #       if Signup_submit:
+ #               validate_signup()
