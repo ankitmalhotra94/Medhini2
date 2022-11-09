@@ -208,12 +208,13 @@ def upload_patient_detail():
     P_sex=st.session_state['psex']
     P_age=st.session_state['page']
     P_image=st.session_state['image']
+    P_Output_Pdf=st.session_state['output_pdf']
     if len(P_age) == 1:
         P_id = P_name[:3]+P_age[:1]+P_sex+P_contact[5:]
     else:
         P_id = P_name[:3]+P_age[:1]+P_sex+P_age[1:]+P_contact[6:]
-    s_sql="Insert into patient_data (doc_id,patient_name,patient_id,patient_contact,patient_sex,patient_age,patient_image) values (%s, %s, %s, %s, %s, %s, %s)"
-    s_val=(doc_id,P_name,P_id,P_contact,P_sex,P_age,P_image)
+    s_sql="Insert into patient_data (doc_id,patient_name,patient_id,patient_contact,patient_sex,patient_age,patient_image,patient_result) values (%s, %s, %s, %s, %s, %s, %s, %s)"
+    s_val=(doc_id,P_name,P_id,P_contact,P_sex,P_age,P_image,P_Output_Pdf)
     cur.execute(s_sql,s_val)
     cnx.commit()
 #    st.write("1 record inserted : ", cur.lastrowid)
@@ -483,6 +484,38 @@ def generate_pdfB():
                 
 #   end of PDF generation for browser
 
+# Start of no_of_test_done function
+
+def no_of_test_done():
+        
+    # Connect to server
+        cnx = mysql.connector.connect(
+                host="sql280.main-hosting.eu",
+                port=3306,
+                user="u553007133_xpbfq",
+                password="yR1/#1hV0AP",
+                database="u553007133_xlvy9")
+        # Get a cursor
+        cur = cnx.cursor()
+        doc_id=first_time()
+        l_sql="SELECT MAX(total_upload) FROM patient_data where doc_id=%s"
+#    l_sql="SELECT MAX(doc_id_no_of_upload) FROM patient_data_all where doc_id=%s"
+        l_val = (doc_id,)
+        cur.execute(l_sql,l_val)
+    # Fetch one result
+        rs = cur.fetchone()
+        if cur.rowcount > 0:
+                if rs[0] == 20:
+                        cnx.close()
+                        return True
+                else:
+                        cnx.close()
+                        return False
+        else:
+                cnx.close()
+                return False
+
+#End of no_of_test_done
                         
 
 #st.write(f'outside if {loginCount}')
@@ -518,58 +551,64 @@ if loginCount == 1 :
     with header:
         st.subheader("Test whether an area is affected by pox")
         st.info("Please fill the below form to start diagnosing",icon="ℹ️")
-#        st.write(f"Doctor id is:- {doc_id}")
-        get_patient_data()
-        if (st.experimental_get_query_params().get('patient')[0]) == 'True':
-            image_file = st.file_uploader("Upload Images", type=["png","jpg","jpeg","jfif"])
-            if image_file is not None:
-                folder_name1=first_time()
-#                st.write(folder_name1)
-                #save uploaded image file in new folder name "uploaded_case"
-#                st.write(os.path.dirname(__file__))
-                with open(os.path.join(os.path.dirname(__file__)+"/",image_file.name), "wb") as f:
-                    f.write(image_file.getbuffer())
-#                st.success("File saved")
-#                st.write(image_file.name)
-                #create binary data of uploaded image
-                with open(os.path.join(os.path.dirname(__file__)+"/",image_file.name), 'rb') as file:
-                    P_image = file.read()
-#                st.session_state['image'] = image_file
-                st.session_state['image'] = P_image
-                # To See details
-                file_details = {"filename":image_file.name, "filetype":image_file.type,
-                              "filesize":image_file.size}
-                # st.write(file_details)
+        no_of_test_result = no_of_test_done()
+        if no_of_test_result == True:
+                st.success("Please upgrade to do more tests")
+        else:
+#               st.write(f"Doctor id is:- {doc_id}")
+                get_patient_data()
+                if (st.experimental_get_query_params().get('patient')[0]) == 'True':
+                    image_file = st.file_uploader("Upload Images", type=["png","jpg","jpeg","jfif"])
+                    if image_file is not None:
+                        folder_name1=first_time()
+        #                st.write(folder_name1)
+                        #save uploaded image file in new folder name "uploaded_case"
+        #                st.write(os.path.dirname(__file__))
+                        with open(os.path.join(os.path.dirname(__file__)+"/",image_file.name), "wb") as f:
+                            f.write(image_file.getbuffer())
+        #                st.success("File saved")
+        #                st.write(image_file.name)
+                        #create binary data of uploaded image
+                        with open(os.path.join(os.path.dirname(__file__)+"/",image_file.name), 'rb') as file:
+                            P_image = file.read()
+        #                st.session_state['image'] = image_file
+                        st.session_state['image'] = P_image
+                        # To See details
+                        file_details = {"filename":image_file.name, "filetype":image_file.type,
+                                      "filesize":image_file.size}
+                        # st.write(file_details)
 
-                # To View Uploaded Image
-                st.image(commons.load_image(image_file)
-                    ,width=250
-                    )
-                print("Image file is it showing location?",image_file)            
-                predictions=commons.predict(model,image_file)
-                print("Loaded image for model")
-                pdf_generated=generate_pdf()
-                P_name2 = st.session_state['pname']
-                # Embed PDF to display it:
-#                base64_pdf = b64encode(generate_pdfB()).decode("utf-8")
-#                pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="400" type="application/pdf">'
-#                st.markdown(pdf_display, unsafe_allow_html=True)
-                #download Button to download output
-                st.download_button(label="Download PDF",
-                                   data=generate_pdfB(),
-                                   file_name=f"{P_name2}.pdf",
-                                   mime="application/pdf",
-                                   )
-                #####
+                        # To View Uploaded Image
+                        st.image(commons.load_image(image_file)
+                            ,width=250
+                            )
+                        print("Image file is it showing location?",image_file)            
+                        predictions=commons.predict(model,image_file)
+                        print("Loaded image for model")
+                        pdf_generated=generate_pdf()
+                        P_name2 = st.session_state['pname']
+                        # Embed PDF to display it:
+        #                base64_pdf = b64encode(generate_pdfB()).decode("utf-8")
+        #                pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="400" type="application/pdf">'
+        #                st.markdown(pdf_display, unsafe_allow_html=True)
+                        #download Button to download output
+                        output_pdf=generate_pdfB()
+                        st.session_state['output_pdf'] = output_pdf
+                        st.download_button(label="Download PDF",
+                                           data=generate_pdfB(),
+                                           file_name=f"{P_name2}.pdf",
+                                           mime="application/pdf",
+                                           )
+                        #####
 
-                #connect to db to save patient details
-#                st.write(pdf_generated)
+                        #connect to db to save patient details
+        #                st.write(pdf_generated)
 
-            else:
-                proxy_img_file="data/chicken00.jpg"
-                st.image(commons.load_image(proxy_img_file),width=250)        
-                predictions=commons.predict(model,proxy_img_file)
-                print("Loaded proxy image for model")
+                    else:
+                        proxy_img_file="data/chicken00.jpg"
+                        st.image(commons.load_image(proxy_img_file),width=250)        
+                        predictions=commons.predict(model,proxy_img_file)
+                        print("Loaded proxy image for model")
     
 #        else :
 #            st.warning("You need to fill Patient detail first to get the diagnosing",icon="🚨")
