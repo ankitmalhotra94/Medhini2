@@ -225,7 +225,7 @@ def validate_signup():
         else :
                 st.write()
 
-tab1 = st.tabs(["Login"])
+tab1, = st.tabs(["Login",])
 #tab1, tab2 = st.tabs(["Login","Sign Up"])
 
 with tab1:
